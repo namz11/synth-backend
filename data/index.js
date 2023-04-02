@@ -1,3 +1,3 @@
-import example from "./example.js";
+import users from "./users.js";
 
-export const exampleDL = example;
+export const usersDL = users;
