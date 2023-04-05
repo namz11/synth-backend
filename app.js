@@ -9,7 +9,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const RedisStore = connectRedis(session);
-// Configure redis client
 const redisClient = createClient({
   legacyMode: true,
 });
@@ -38,7 +37,7 @@ app.use(
 
 constructorMethod(app);
 
-app.listen(3000, () => {
+app.listen(8888, () => {
   console.log("We've now got a server!");
-  console.log("Your routes will be running on http://localhost:3000");
+  console.log("Your routes will be running on http://localhost:8888");
 });
