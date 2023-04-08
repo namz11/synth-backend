@@ -7,7 +7,13 @@ const password = process.env.REDIS_PASSWORD || null;
 const [host, port] = endpoint.split(":");
 
 // const client = createClient();
-const client = createClient(+port, host);
+const client = createClient({
+  socket: {
+    host: host,
+    port: +port,
+  },
+  password,
+});
 client.on("error", (err) => console.log("Redis Client Error", err));
 client.on("connect", function (err) {
   console.log("Connected to redis successfully");
