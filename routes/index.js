@@ -1,11 +1,11 @@
+import express from "express";
 import usersAPI from "./users.js";
+import playlistsAPI from "./playlists.js";
 
-const constructorMethod = (app) => {
-  app.use("/api/users", usersAPI);
+const router = express.Router();
 
-  app.use("*", (req, res) => {
-    res.status(404).json({ success: false, error: "Page not found" });
-  });
-};
+// add all routes here
+router.use("/users", usersAPI);
+router.use("/playlists", playlistsAPI);
 
-export { constructorMethod };
+export default router;
