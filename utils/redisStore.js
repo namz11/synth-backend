@@ -1,6 +1,13 @@
 import { createClient } from "redis";
+import * as dotenv from "dotenv";
+dotenv.config();
 
-const client = createClient();
+const endpoint = process.env.REDIS_ENDPOINT_URL || "127.0.0.1:6379";
+const password = process.env.REDIS_PASSWORD || null;
+const [host, port] = endpoint.split(":");
+
+// const client = createClient();
+const client = createClient(+port, host);
 client.on("error", (err) => console.log("Redis Client Error", err));
 client.on("connect", function (err) {
   console.log("Connected to redis successfully");
