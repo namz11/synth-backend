@@ -2,19 +2,30 @@ import { createClient } from "redis";
 import * as dotenv from "dotenv";
 dotenv.config();
 
-const endpoint = process.env.REDIS_ENDPOINT_URL || "127.0.0.1:6379";
-const password = process.env.REDIS_PASSWORD || null;
-const [host, port] = endpoint.split(":");
+// const endpoint = process.env.REDIS_ENDPOINT_URL || "127.0.0.1:6379";
+// const password = process.env.REDIS_PASSWORD || null;
+// const [host, port] = endpoint.split(":");
 
-// const client = createClient();
+// // const client = createClient();
+// const client = createClient({
+//   socket: {
+//     host: host,
+//     port: +port,
+//   },
+//   password,
+// });
+// client.on("error", (err) => console.log("Redis Client Error", err));
+// client.on("connect", function (err) {
+//   console.log("Connected to redis successfully");
+// });
+// await client.connect();
+
 const client = createClient({
-  socket: {
-    host: host,
-    port: +port,
-  },
-  password,
+  url: "redis://default:958a67d17a4b4558888b137b13557bbf@us1-flowing-insect-37189.upstash.io:37189",
 });
-client.on("error", (err) => console.log("Redis Client Error", err));
+client.on("error", function (err) {
+  throw err;
+});
 client.on("connect", function (err) {
   console.log("Connected to redis successfully");
 });
