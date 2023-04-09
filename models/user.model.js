@@ -1,4 +1,4 @@
-import { helpers } from "../utils/helpers";
+import { helpers } from "../utils/helpers.js";
 
 // this is an example
 export class User {

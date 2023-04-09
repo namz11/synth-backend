@@ -7,6 +7,14 @@ const getCategoryPlaylists = async (category_id) => {
   return data;
 };
 
+const getFeaturedPlaylists = async () => {
+  const { data } = await axiosInstance.get(
+    `https://api.spotify.com/v1/browse/featured-playlists`
+  );
+  return data;
+};
+
 export default {
   getCategoryPlaylists,
+  getFeaturedPlaylists,
 };

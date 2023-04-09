@@ -11,7 +11,10 @@ const errorHandler = async (error, req, res, next) => {
 
 const failSafeHandler = (error, req, res, next) => {
   // generic handler
-  res.status(500).send(error?.message || error || "Something went wrong!");
+  res.status(500).json({
+    success: false,
+    message: error?.message || error || "Something went wrong!",
+  });
 };
 
 export { errorLogger, errorHandler, failSafeHandler };

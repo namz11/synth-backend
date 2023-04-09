@@ -1,5 +1,7 @@
 import users from "./users.js";
-import playlist from "./playlists.js";
+import playlists from "./playlists.js";
+import userPlaylists from "./userPlaylists.js";
 
 export const usersDL = users;
-export const playlistDL = playlist;
+export const playlistsDL = playlists;
+export const userPlaylistsDL = userPlaylists;
