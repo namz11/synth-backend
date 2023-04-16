@@ -1,7 +1,11 @@
 import express from "express";
 import { playlistsDL } from "../data/index.js";
+import middleware from "../middleware/middleware.js";
 
 const router = express.Router();
+
+// In order to protect the route, an authentication middleware is applied.
+router.use(middleware.decodeToken);
 
 // this contains all the spotify routes
 router.route("/category").get(async (req, res, next) => {

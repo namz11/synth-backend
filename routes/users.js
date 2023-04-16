@@ -1,7 +1,10 @@
 import express from "express";
 import { usersDL } from "../data/index.js";
+import middleware from "../middleware/middleware.js";
 
 const router = express.Router();
+
+router.use(middleware.decodeToken);
 
 router
   .route("/")
