@@ -4,6 +4,9 @@ import admin from "../config/firebase-config.js";
 // #FIREBASEAUTH This is the code for authorizing the tokens. In case the user is unauthenticated, the api call will fail and an error can be thrown or a page can be displayed for notifying the unauthorized access.
 class Middleware {
   async decodeToken(req, res, next) {
+    // console.log("Middleware Is Fired!");
+    console.log(`Middleware Is Fired for ${req.method} ${req.url}`);
+    // console.log(req.headers);
     console.log(`Headers: ${JSON.stringify(req.headers)}`);
     const authHeader = req.headers.authorization;
     if (!authHeader) {
@@ -11,11 +14,11 @@ class Middleware {
     }
     const token = req.headers.authorization.split(" ")[1];
     try {
-      //   console.log(typeof (await admin.auth().verifyToken(token)));
       const decodeValue = await admin.auth().verifyIdToken(token);
       // console.log(`Decode value: ${decodeValue}`);
-      console.log("Middleware Fired");
+      // console.log("Middleware Fired");
       if (decodeValue) {
+        // console.log(decodeValue);
         return next();
       }
 
@@ -27,5 +30,4 @@ class Middleware {
   }
 }
 
-// module.exports = new Middleware();
 export default new Middleware();

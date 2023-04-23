@@ -1,11 +1,8 @@
 import express from "express";
 import { userPlaylistsDL } from "../data/index.js";
 import { sendData, sendList, sendMessage } from "../utils/helpers.js";
-import middleware from "../middleware/middleware.js";
 
 const router = express.Router();
-
-router.use(middleware.decodeToken);
 
 // this contains all the user playlist routes
 router
