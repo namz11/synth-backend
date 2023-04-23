@@ -5,9 +5,9 @@ import admin from "../config/firebase-config.js";
 class Middleware {
   async decodeToken(req, res, next) {
     // console.log("Middleware Is Fired!");
-    console.log(`Middleware Is Fired for ${req.method} ${req.url}`);
+    // console.log(`Middleware Is Fired for ${req.method} ${req.url}`);
     // console.log(req.headers);
-    console.log(`Headers: ${JSON.stringify(req.headers)}`);
+    // console.log(`Headers: ${JSON.stringify(req.headers)}`);
     const authHeader = req.headers.authorization;
     if (!authHeader) {
       return res.json({ message: "Missing Authorization header" });
@@ -15,10 +15,8 @@ class Middleware {
     const token = req.headers.authorization.split(" ")[1];
     try {
       const decodeValue = await admin.auth().verifyIdToken(token);
-      // console.log(`Decode value: ${decodeValue}`);
       // console.log("Middleware Fired");
       if (decodeValue) {
-        // console.log(decodeValue);
         return next();
       }
 

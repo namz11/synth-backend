@@ -1,4 +1,4 @@
-import Middleware from "../middleware/middleware.js";
+import Middleware from "../utils/middleware.js";
 import cors from "cors";
 
 import express from "express";
