@@ -56,4 +56,13 @@ router.route("/featured").get(async (req, res, next) => {
   }
 });
 
+router.route("/:id").get(async (req, res, next) => {
+  try {
+    const data = await playlistsDL.getPlaylistData(req.params.id);
+    return res.json(data);
+  } catch (error) {
+    next(error);
+  }
+});
+
 export default router;

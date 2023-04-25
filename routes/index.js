@@ -2,6 +2,8 @@ import express from "express";
 import usersAPI from "./users.js";
 import playlistsAPI from "./playlists.js";
 import userPlaylistsAPI from "./userPlaylists.js";
+import artistAPI from "./artist.js";
+import albumAPI from "./album.js";
 
 const router = express.Router();
 
@@ -9,5 +11,7 @@ const router = express.Router();
 router.use("/users", usersAPI);
 router.use("/playlists", playlistsAPI);
 router.use("/user/playlists", userPlaylistsAPI);
+router.use("/artist", artistAPI);
+router.use("/album", albumAPI);
 
 export default router;
