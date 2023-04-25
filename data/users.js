@@ -11,6 +11,12 @@ const getUsers = async () => {
   return users;
 };
 
+const getUserById = async () => {
+  // TODO aman - to be done by aman
+  return { id: "6XjK055WpDVvPNkiUy4P7BF1hvQ2", tracks: [] };
+};
+
 export default {
   getUsers,
+  getUserById,
 };

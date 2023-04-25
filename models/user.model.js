@@ -1,6 +1,6 @@
 import { helpers } from "../utils/helpers.js";
 
-export class User {
+export default class User {
   constructor(obj) {
     this.firstName = helpers.sanitizeString(obj?.firstName);
     this.lastName = helpers.sanitizeString(obj?.lastName);

@@ -9,6 +9,7 @@ router
   .route("/")
   .get(async (req, res, next) => {
     try {
+      // TODO aman - setup userId & send it to data functions
       const data = await userPlaylistsDL.getUserPlaylists();
       return res.json(sendList(data));
     } catch (error) {
@@ -17,6 +18,7 @@ router
   })
   .post(async (req, res, next) => {
     try {
+      // TODO aman - setup userId & send it to data functions
       const obj = req.body;
       const data = await userPlaylistsDL.createPlaylist(obj);
       return res.json(sendData(data));
@@ -38,6 +40,8 @@ router
   })
   .put(async (req, res, next) => {
     try {
+      // TODO aman - setup userId & send it to data functions
+      // TODO narmit - add same user check
       const id = req.params.id;
       const obj = req.body;
       const data = await userPlaylistsDL.updatePlaylist(id, obj);
@@ -48,6 +52,8 @@ router
   })
   .delete(async (req, res, next) => {
     try {
+      // TODO aman - setup userId & send it to data functions
+      // TODO narmit - add same user check
       const id = req.params.id;
       const data = await userPlaylistsDL.softDeletePlaylist(id);
       if (data) return res.json(sendMessage("Playlist deleted"));
@@ -61,6 +67,8 @@ router
   .route("/:id/tracks")
   .put(async (req, res, next) => {
     try {
+      // TODO aman - setup userId & send it to data functions
+      // TODO narmit - add same user check
       const id = req.params.id;
       const { tracks } = req.body;
       const data = await userPlaylistsDL.addTracksToPlaylist(id, tracks);
@@ -72,6 +80,8 @@ router
   })
   .delete(async (req, res, next) => {
     try {
+      // TODO aman - setup userId & send it to data functions
+      // TODO narmit - add same user check
       const id = req.params.id;
       const { tracks } = req.body;
       const data = await userPlaylistsDL.removeTrackFromPlaylist(id, tracks);
