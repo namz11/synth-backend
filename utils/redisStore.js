@@ -29,6 +29,7 @@ const addJsonToStore = async (key, value) =>
   await client.set(key?.trim(), JSON.stringify(value));
 //#endregion
 
+//#region spotify token
 const getSpotifyTokenFromStore = async () => {
   if (await existsInStore(`spotifyToken`)) {
     return await getFromStore(`spotifyToken`);
@@ -37,6 +38,27 @@ const getSpotifyTokenFromStore = async () => {
 };
 const addSpotifyTokenToStore = async (token) =>
   await addToStore(`spotifyToken`, token);
+//#endregion
+
+//#region most played
+const updateMostPlayedScoreboard = async (userId, trackId) => {
+  // copied from p hill lecture code
+  // first let's check to see if it's in the search term list
+  let existsInScoreBoard = await client.zRank(`${userId}mostPlayed`, trackId);
+  if (existsInScoreBoard !== null) {
+    // It has been found in the list so let's increment it by 1
+    await client.zIncrBy(`${userId}mostPlayed`, 1, trackId);
+  } else {
+    //If the search term is not found in the list, then we know to add it
+    await client.zAdd(`${userId}mostPlayed`, {
+      score: 1,
+      value: trackId,
+    });
+  }
+};
+const getMostPlayedByUser = async (userId) =>
+  await client.zRange(`${userId}mostPlayed`, 0, 9, { REV: true });
+//#endregion
 
 const store = {
   // basic
@@ -48,6 +70,8 @@ const store = {
   // spotify token
   getSpotifyTokenFromStore,
   addSpotifyTokenToStore,
+  updateMostPlayedScoreboard,
+  getMostPlayedByUser,
 };
 
 export default store;

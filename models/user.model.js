@@ -1,22 +1,20 @@
 import { helpers } from "../utils/helpers.js";
 
-// this is an example
-export class User {
+export default class User {
   constructor(obj) {
     this.firstName = helpers.sanitizeString(obj?.firstName);
     this.lastName = helpers.sanitizeString(obj?.lastName);
     this.email = helpers.sanitizeString(obj?.email);
-    this.phone = helpers.sanitizeString(obj?.phone);
-    this.dob = obj?.dob;
-    this.password = obj?.password;
-    this.isVerified = obj?.isVerified || false;
+    this.photoUrl = helpers.sanitizeString(obj?.photoUrl);
+    this.displayName = helpers.sanitizeString(obj?.displayName);
+    this.recentTracks = [];
   }
 
   deserialize(user) {
     user = {
-      ...user,
+      id: user.id,
+      ...user.data(),
     };
-    delete user.password; // do not let the frontend have access to pwd field
     return user;
   }
 
@@ -24,7 +22,6 @@ export class User {
     user = {
       ...user,
     };
-    delete user.password; // do not let the frontend have access to pwd field
     return user;
   }
 }
