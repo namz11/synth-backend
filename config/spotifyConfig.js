@@ -9,7 +9,7 @@ const spotifyConfig = {
 // The refresh token can be used any number of times to get a new access token.
 // If we want a new refresh token, we need to go through the authorization code flow again, which Dom did manually.
 const refreshSpotifyToken =
-  "AQD4A80_P1IXFFjfLcnGJd6LjpTv3L1QrOMWPKROG8iHzgBlTYssVNNZvq_Q6fqSVmBdYkQzLk49-6Z31XKqyLPme0ZVFeyC1A-f1BwY2G0UIIcjUFSK9qYSaFS19RO_TMA";
+  "AQDGrJtrgf4Ejg88VqwI1fGS7RWv4L-Na3Lk7zHPbgSPgoASaAHhEcHkAJ9R9OVcVdhQJ_16CJ5eruKHS2f5WFr-kkO7IabLec1U46DepaX2L9nsRmy92nkTG_u67Eznl0s";
 // The encoded authorization string is the base64 encoding of the client id and client secret.
 // string = "Basic " + base64Encode(client_id + ":" + client_secret)
 const encodedAuthorizationString =
