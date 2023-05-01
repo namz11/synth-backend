@@ -9,14 +9,19 @@ class Middleware {
     // console.log(req.headers);
     // console.log(`Headers: ${JSON.stringify(req.headers)}`);
     const authHeader = req.headers.authorization;
+
     if (!authHeader) {
       return res.json({ message: "Missing Authorization header" });
     }
     const token = req.headers.authorization.split(" ")[1];
+
+    // console.log(token.getIdToken());
+
     try {
       const decodeValue = await admin.auth().verifyIdToken(token);
       // console.log("Middleware Fired");
       if (decodeValue) {
+        req.userId = decodeValue.user_id;
         return next();
       }
 
