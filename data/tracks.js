@@ -6,7 +6,7 @@ import axiosInstance from "../utils/axiosInstance.js";
 import User from "../models/user.model.js";
 import { uniq, remove } from "lodash-es";
 
-// TODO aman - remove static id ref form ALL methods in this file
+// TODO aman - remove static id ref form ALL methods in this file [DONE]
 
 const getTrackById = async (id = "11dFghVXANMlKmJXsNCbNl") => {
   const { data } = await axiosInstance.get(
@@ -20,10 +20,7 @@ const getTrackById = async (id = "11dFghVXANMlKmJXsNCbNl") => {
  * @param {string} userId
  * @param {string} trackId
  */
-const addToMostPlayed = async (
-  userId = "6XjK055WpDVvPNkiUy4P7BF1hvQ2",
-  trackId = "11dFghVXANMlKmJXsNCbNl"
-) => {
+const addToMostPlayed = async (userId, trackId = "11dFghVXANMlKmJXsNCbNl") => {
   await store.updateMostPlayedScoreboard(userId, trackId);
   return true;
 };
@@ -32,7 +29,7 @@ const addToMostPlayed = async (
  * Get a users's 10 most played tracks
  * @param {string} userId - the id of user
  */
-const getUserMostPlayed = async (userId = "6XjK055WpDVvPNkiUy4P7BF1hvQ2") => {
+const getUserMostPlayed = async (userId) => {
   const tracks = await store.getMostPlayedByUser(userId);
   const mostPlayed = [];
   if (tracks?.length > 0) {
@@ -50,7 +47,7 @@ const getUserMostPlayed = async (userId = "6XjK055WpDVvPNkiUy4P7BF1hvQ2") => {
  * @param {string} trackId
  */
 const addToRecentPlayed = async (
-  userId = "6XjK055WpDVvPNkiUy4P7BF1hvQ2",
+  userId,
   trackId = "11dFghVXANMlKmJXsNCbNl"
 ) => {
   const { tracks } = users.getUserById(userId);
@@ -71,7 +68,7 @@ const addToRecentPlayed = async (
  * Get recent tracks played by user
  * @param {string} userId - the id of user
  */
-const getRecentTracks = async (userId = "6XjK055WpDVvPNkiUy4P7BF1hvQ2") => {
+const getRecentTracks = async (userId) => {
   const data = await getDoc(doc(db, "users", userId));
   const userData = new User().deserialize(data);
   const recentTracks = [];

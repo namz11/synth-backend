@@ -21,7 +21,7 @@ const playlistsRef = collection(db, "playlists");
  * Get a user's created playlists
  * @param {string} userId
  */
-const getUserPlaylists = async (userId = "narmit") => {
+const getUserPlaylists = async (userId) => {
   const qRef = query(
     playlistsRef,
     where("isActive", "==", true),
@@ -47,7 +47,7 @@ const getPlaylistById = async (id) => {
  * Add playlist to db
  * @param {Object} data - playlist data
  */
-const createPlaylist = async (data) => {
+const createPlaylist = async (data, userId) => {
   const newPlaylist = new Playlist(data);
   const playlist = await addDoc(playlistsRef, {
     ...newPlaylist,
@@ -62,7 +62,7 @@ const createPlaylist = async (data) => {
  * @param {string} id - the id of playlist
  * @param {Object} data - playlist data
  */
-const updatePlaylist = async (id, data) => {
+const updatePlaylist = async (id, data, userId) => {
   const newPlaylist = new Playlist(data);
   delete newPlaylist.userId;
   delete newPlaylist.tracks;
@@ -83,7 +83,7 @@ const updatePlaylist = async (id, data) => {
  * @param {string} tracks[].id - id of track
  * @param {string} tracks[].images[].url - url of track image
  */
-const addTracksToPlaylist = async (id, tracks) => {
+const addTracksToPlaylist = async (id, tracks, userId) => {
   const playlistRef = doc(db, "playlists", id);
 
   const images = tracks
@@ -103,7 +103,7 @@ const addTracksToPlaylist = async (id, tracks) => {
  * @param {string} id - the id of playlist
  * @param {string[]} tracks - an array of trackId
  */
-const removeTrackFromPlaylist = async (id, tracks) => {
+const removeTrackFromPlaylist = async (id, tracks, userId) => {
   const playlistRef = doc(db, "playlists", id);
   await updateDoc(playlistRef, {
     tracks: arrayRemove(...tracks),
@@ -116,7 +116,7 @@ const removeTrackFromPlaylist = async (id, tracks) => {
  * soft delete playlist
  * @param {string} id - the id of playlist
  */
-const softDeletePlaylist = async (id) => {
+const softDeletePlaylist = async (id, userId) => {
   const playlistRef = doc(db, "playlists", id);
   await updateDoc(playlistRef, {
     isActive: false,
