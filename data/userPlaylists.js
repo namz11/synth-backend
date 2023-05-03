@@ -58,7 +58,7 @@ const createPlaylist = async (data, userId) => {
 };
 
 /**
- * update playlist - does not update - userId, tracks, images
+ * update playlist - does not update - userId, tracks
  * @param {string} id - the id of playlist
  * @param {Object} data - playlist data
  */
@@ -66,7 +66,6 @@ const updatePlaylist = async (id, data, userId) => {
   const newPlaylist = new Playlist(data);
   delete newPlaylist.userId;
   delete newPlaylist.tracks;
-  delete newPlaylist.images;
   delete newPlaylist.createdAt;
   const playlistRef = doc(db, "playlists", id);
   const playlist = await updateDoc(playlistRef, {
@@ -81,18 +80,12 @@ const updatePlaylist = async (id, data, userId) => {
  * @param {string} id - the id of playlist
  * @param {Object[]} tracks - an array of tracks to add
  * @param {string} tracks[].id - id of track
- * @param {string} tracks[].images[].url - url of track image
  */
 const addTracksToPlaylist = async (id, tracks, userId) => {
   const playlistRef = doc(db, "playlists", id);
 
-  const images = tracks
-    .filter((t) => t?.images?.length && t?.images[0]?.url?.trim() !== "")
-    .map((x) => x?.images[0]?.url?.trim());
-
   await updateDoc(playlistRef, {
     tracks: arrayUnion(...tracks.map((track) => track.id)),
-    images: arrayUnion(...images),
     updatedAt: serverTimestamp(),
   });
   return true;
