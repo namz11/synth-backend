@@ -6,9 +6,7 @@ import axiosInstance from "../utils/axiosInstance.js";
 import User from "../models/user.model.js";
 import { uniq, remove } from "lodash-es";
 
-// TODO aman - remove static id ref form ALL methods in this file [DONE]
-
-const getTrackById = async (id = "11dFghVXANMlKmJXsNCbNl") => {
+const getTrackById = async (id) => {
   const { data } = await axiosInstance.get(
     `https://api.spotify.com/v1/tracks/${id}`
   );
@@ -20,7 +18,7 @@ const getTrackById = async (id = "11dFghVXANMlKmJXsNCbNl") => {
  * @param {string} userId
  * @param {string} trackId
  */
-const addToMostPlayed = async (userId, trackId = "11dFghVXANMlKmJXsNCbNl") => {
+const addToMostPlayed = async (userId, trackId) => {
   await store.updateMostPlayedScoreboard(userId, trackId);
   return true;
 };
@@ -46,10 +44,7 @@ const getUserMostPlayed = async (userId) => {
  * @param {string} userId
  * @param {string} trackId
  */
-const addToRecentPlayed = async (
-  userId,
-  trackId = "11dFghVXANMlKmJXsNCbNl"
-) => {
+const addToRecentPlayed = async (userId, trackId) => {
   const { tracks } = users.getUserById(userId);
   let updatedTracks = remove(tracks);
   if (tracks.length >= 10) {

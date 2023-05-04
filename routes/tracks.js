@@ -6,9 +6,7 @@ const router = express.Router();
 
 router.route("/user/most-played").get(async (req, res, next) => {
   try {
-    // TODO aman - setup userId & send it to data functions
-    const userId = req.userId; // Passed the userId from the middleware in the request object. It can be accessed. in this way
-    console.log(userId);
+    const userId = req.userId; // Passed the userId from the middleware in the request object.
 
     const data = await tracksDL.getUserMostPlayed(userId);
     return res.json(sendList(data));
@@ -19,9 +17,7 @@ router.route("/user/most-played").get(async (req, res, next) => {
 
 router.route("/user/recent").get(async (req, res, next) => {
   try {
-    // TODO aman - setup userId & send it to data functions
-    const userId = req.userId; // Passed the userId from the middleware in the request object. It can be accessed. in this way
-    console.log(userId);
+    const userId = req.userId; // Passed the userId from the middleware in the request object.
 
     const data = await tracksDL.getRecentTracks(userId);
     return res.json(sendList(data));
@@ -41,9 +37,7 @@ router.route("/:id").get(async (req, res, next) => {
 });
 
 router.route("/user/add").post(async (req, res, next) => {
-  // const userId = "narmit"; // TODO aman - setup userId & send it to data functions [DONE]
-  const userId = req.userId; // Passed the userId from the middleware in the request object. It can be accessed. in this way
-  console.log(userId);
+  const userId = req.userId; // Passed the userId from the middleware in the request object.
 
   try {
     const { trackId } = req.body;

@@ -68,11 +68,11 @@ const updatePlaylist = async (id, data, userId) => {
   delete newPlaylist.tracks;
   delete newPlaylist.createdAt;
   const playlistRef = doc(db, "playlists", id);
-  const playlist = await updateDoc(playlistRef, {
+  await updateDoc(playlistRef, {
     ...newPlaylist,
     updatedAt: serverTimestamp(),
   });
-  return await getPlaylistById(playlist.id);
+  return await getPlaylistById(id);
 };
 
 /**

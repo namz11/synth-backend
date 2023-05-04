@@ -9,9 +9,7 @@ router
   .route("/")
   .get(async (req, res, next) => {
     try {
-      // TODO aman - setup userId & send it to data functions [DONE]
-      const userId = req.userId; // Passed the userId from the middleware in the request object. It can be accessed. in this way
-      console.log(userId);
+      const userId = req.userId; // Passed the userId from the middleware in the request object.
 
       const data = await userPlaylistsDL.getUserPlaylists(userId);
       return res.json(sendList(data));
@@ -21,9 +19,7 @@ router
   })
   .post(async (req, res, next) => {
     try {
-      // TODO aman - setup userId & send it to data functions [DONE]
-      const userId = req.userId; // Passed the userId from the middleware in the request object. It can be accessed. in this way
-      console.log(userId);
+      const userId = req.userId; // Passed the userId from the middleware in the request object.
 
       const obj = req.body;
       const data = await userPlaylistsDL.createPlaylist(obj, userId);
@@ -46,9 +42,7 @@ router
   })
   .put(async (req, res, next) => {
     try {
-      // TODO aman - setup userId & send it to data functions [DONE]
-      const userId = req.userId; // Passed the userId from the middleware in the request object. It can be accessed. in this way
-      console.log(userId);
+      const userId = req.userId; // Passed the userId from the middleware in the request object.
 
       // TODO narmit - add same user check
       const id = req.params.id;
@@ -61,9 +55,7 @@ router
   })
   .delete(async (req, res, next) => {
     try {
-      // TODO aman - setup userId & send it to data functions [DONE]
-      const userId = req.userId; // Passed the userId from the middleware in the request object. It can be accessed. in this way
-      console.log(userId);
+      const userId = req.userId; // Passed the userId from the middleware in the request object.
 
       // TODO narmit - add same user check
       const id = req.params.id;
@@ -79,9 +71,7 @@ router
   .route("/:id/tracks")
   .put(async (req, res, next) => {
     try {
-      // TODO aman - setup userId & send it to data functions [DONE]
-      const userId = req.userId; // Passed the userId from the middleware in the request object. It can be accessed. in this way
-      console.log(userId);
+      const userId = req.userId; // Passed the userId from the middleware in the request object.
 
       // TODO narmit - add same user check
       const id = req.params.id;
@@ -99,9 +89,7 @@ router
   })
   .delete(async (req, res, next) => {
     try {
-      // TODO aman - setup userId & send it to data functions [DONE]
-      const userId = req.userId; // Passed the userId from the middleware in the request object. It can be accessed. in this way
-      console.log(userId);
+      const userId = req.userId; // Passed the userId from the middleware in the request object.
 
       // TODO narmit - add same user check
       const id = req.params.id;
