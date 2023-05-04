@@ -51,6 +51,7 @@ const createPlaylist = async (data, userId) => {
   const newPlaylist = new Playlist(data);
   const playlist = await addDoc(playlistsRef, {
     ...newPlaylist,
+    userId,
     createdAt: serverTimestamp(),
     updatedAt: serverTimestamp(),
   });
