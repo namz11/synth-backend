@@ -43,27 +43,31 @@ router
   .put(async (req, res, next) => {
     try {
       const userId = req.userId; // Passed the userId from the middleware in the request object.
-
-      // TODO narmit - add same user check
       const id = req.params.id;
       const obj = req.body;
       const data = await userPlaylistsDL.updatePlaylist(id, obj, userId);
       return res.json(sendData(data));
     } catch (error) {
-      next("Unable to update playlist");
+      if (error.message == "User does not have permission") {
+        next({ status: 401, message: error.message });
+      } else {
+        next("Unable to update playlist");
+      }
     }
   })
   .delete(async (req, res, next) => {
     try {
       const userId = req.userId; // Passed the userId from the middleware in the request object.
-
-      // TODO narmit - add same user check
       const id = req.params.id;
       const data = await userPlaylistsDL.softDeletePlaylist(id, userId);
       if (data) return res.json(sendMessage("Playlist deleted"));
       else return res.json(sendMessage("Unable to delete", false));
     } catch (error) {
-      next(error);
+      if (error.message == "User does not have permission") {
+        next({ status: 401, message: error.message });
+      } else {
+        next(error);
+      }
     }
   });
 
@@ -72,8 +76,6 @@ router
   .put(async (req, res, next) => {
     try {
       const userId = req.userId; // Passed the userId from the middleware in the request object.
-
-      // TODO narmit - add same user check
       const id = req.params.id;
       const { tracks } = req.body;
       const data = await userPlaylistsDL.addTracksToPlaylist(
@@ -84,14 +86,16 @@ router
       if (data) return res.json(sendMessage("Added to playlist"));
       else return res.json(sendMessage("Unable to add", false));
     } catch (error) {
-      next(error);
+      if (error.message == "User does not have permission") {
+        next({ status: 401, message: error.message });
+      } else {
+        next(error);
+      }
     }
   })
   .delete(async (req, res, next) => {
     try {
       const userId = req.userId; // Passed the userId from the middleware in the request object.
-
-      // TODO narmit - add same user check
       const id = req.params.id;
       const { tracks } = req.body;
       const data = await userPlaylistsDL.removeTrackFromPlaylist(
@@ -102,7 +106,11 @@ router
       if (data) return res.json(sendMessage("Removed from playlist"));
       else return res.json(sendMessage("Unable to remove", false));
     } catch (error) {
-      next(error);
+      if (error.message == "User does not have permission") {
+        next({ status: 401, message: error.message });
+      } else {
+        next(error);
+      }
     }
   });
 

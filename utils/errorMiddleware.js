@@ -6,7 +6,14 @@ const errorLogger = (error, req, res, next) => {
 
 const errorHandler = async (error, req, res, next) => {
   // handle custom errors here
-  next(error); // forward to generic handler
+  if (error?.status) {
+    return res.status(error?.status).json({
+      success: false,
+      message: error?.message || "Something went wrong!",
+    });
+  } else {
+    next(error); // forward to generic handler
+  }
 };
 
 const failSafeHandler = (error, req, res, next) => {

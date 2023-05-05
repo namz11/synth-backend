@@ -48,7 +48,7 @@ const getPlaylistById = async (id) => {
  * @param {Object} data - playlist data
  */
 const createPlaylist = async (data, userId) => {
-  const newPlaylist = new Playlist(data);
+  const newPlaylist = new Playlist({ ...data, userId });
   const playlist = await addDoc(playlistsRef, {
     ...newPlaylist,
     userId,
@@ -69,11 +69,16 @@ const updatePlaylist = async (id, data, userId) => {
   delete newPlaylist.tracks;
   delete newPlaylist.createdAt;
   const playlistRef = doc(db, "playlists", id);
-  await updateDoc(playlistRef, {
-    ...newPlaylist,
-    updatedAt: serverTimestamp(),
-  });
-  return await getPlaylistById(id);
+  const playlist = await getPlaylistById(id);
+  if (playlist.userId === userId) {
+    await updateDoc(playlistRef, {
+      ...newPlaylist,
+      updatedAt: serverTimestamp(),
+    });
+    return await getPlaylistById(id);
+  } else {
+    throw new Error("User does not have permission");
+  }
 };
 
 /**
@@ -84,12 +89,16 @@ const updatePlaylist = async (id, data, userId) => {
  */
 const addTracksToPlaylist = async (id, tracks, userId) => {
   const playlistRef = doc(db, "playlists", id);
-
-  await updateDoc(playlistRef, {
-    tracks: arrayUnion(...tracks.map((track) => track.id)),
-    updatedAt: serverTimestamp(),
-  });
-  return true;
+  const playlist = await getPlaylistById(id);
+  if (playlist.userId === userId) {
+    await updateDoc(playlistRef, {
+      tracks: arrayUnion(...tracks.map((track) => track.id)),
+      updatedAt: serverTimestamp(),
+    });
+    return true;
+  } else {
+    throw new Error("User does not have permission");
+  }
 };
 
 /**
@@ -99,11 +108,16 @@ const addTracksToPlaylist = async (id, tracks, userId) => {
  */
 const removeTrackFromPlaylist = async (id, tracks, userId) => {
   const playlistRef = doc(db, "playlists", id);
-  await updateDoc(playlistRef, {
-    tracks: arrayRemove(...tracks),
-    updatedAt: serverTimestamp(),
-  });
-  return true;
+  const playlist = await getPlaylistById(id);
+  if (playlist.userId === userId) {
+    await updateDoc(playlistRef, {
+      tracks: arrayRemove(...tracks),
+      updatedAt: serverTimestamp(),
+    });
+    return true;
+  } else {
+    throw new Error("User does not have permission");
+  }
 };
 
 /**
@@ -112,11 +126,16 @@ const removeTrackFromPlaylist = async (id, tracks, userId) => {
  */
 const softDeletePlaylist = async (id, userId) => {
   const playlistRef = doc(db, "playlists", id);
-  await updateDoc(playlistRef, {
-    isActive: false,
-    updatedAt: serverTimestamp(),
-  });
-  return true;
+  const playlist = await getPlaylistById(id);
+  if (playlist.userId === userId) {
+    await updateDoc(playlistRef, {
+      isActive: false,
+      updatedAt: serverTimestamp(),
+    });
+    return true;
+  } else {
+    throw new Error("User does not have permission");
+  }
 };
 
 /**
