@@ -50,3 +50,10 @@ export const validations = {
     return str.match(alphabetRegex);
   },
 };
+
+export const sendData = (data) => ({ success: true, data });
+export const sendMessage = (message, isSuccess = true) => ({
+  success: isSuccess,
+  message,
+});
+export const sendList = (list) => ({ success: true, items: list });
