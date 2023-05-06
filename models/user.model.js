@@ -5,8 +5,10 @@ export default class User {
     this.firstName = helpers.sanitizeString(obj?.firstName);
     this.lastName = helpers.sanitizeString(obj?.lastName);
     this.email = helpers.sanitizeString(obj?.email);
-    this.photoUrl = helpers.sanitizeString(obj?.photoUrl);
+    this.photoURL = helpers.sanitizeString(obj?.photoURL);
     this.displayName = helpers.sanitizeString(obj?.displayName);
+    this.dateOfBirth = obj?.dateOfBirth;
+    this.emailVerified = obj?.emailVerified;
     this.recentTracks = [];
   }
 
