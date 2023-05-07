@@ -9,7 +9,7 @@ export default class User {
     this.displayName = helpers.sanitizeString(obj?.displayName);
     this.dateOfBirth = obj?.dateOfBirth;
     this.emailVerified = obj?.emailVerified;
-    this.recentTracks = [];
+    this.tracks = [];
   }
 
   deserialize(user) {

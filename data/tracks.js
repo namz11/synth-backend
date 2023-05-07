@@ -45,9 +45,9 @@ const getUserMostPlayed = async (userId) => {
  * @param {string} trackId
  */
 const addToRecentPlayed = async (userId, trackId) => {
-  const { tracks } = users.getUserById(userId);
+  const { tracks } = await users.getUserById(userId);
   let updatedTracks = remove(tracks);
-  if (tracks.length >= 10) {
+  if (tracks?.length >= 10) {
     updatedTracks.unshift(trackId);
     updatedTracks.slice(0, 10);
   } else {
