@@ -5,9 +5,7 @@ import admin from "../config/firebase-config.js";
 class Middleware {
   async decodeToken(req, res, next) {
     const authHeader = req.headers.authorization;
-    // console.log(authHeader);
     if (!authHeader) {
-      console.log("No Auth Header");
       return res.json({ message: "Missing Authorization header" });
     }
     const token = req.headers.authorization.split(" ")[1];
