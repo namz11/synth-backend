@@ -16,7 +16,6 @@ const encodedAuthorizationString =
   "Basic MDIwM2JhYzllZGI5NDk3MTk3NDlhMjk0YzIyZGU4NWM6MWU0YmMzNmNjODNlNDcyOTkwMDNhYjM5YjNmMTJhMjk=";
 
 const getSpotifyToken = async () => {
-  console.log("fetching spotify token");
   const headers = {
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",

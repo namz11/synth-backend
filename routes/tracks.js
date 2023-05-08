@@ -26,16 +26,6 @@ router.route("/user/recent").get(async (req, res, next) => {
   }
 });
 
-router.route("/:id").get(async (req, res, next) => {
-  try {
-    const id = req.params.id;
-    const data = await tracksDL.getTrackById(id);
-    return res.json(sendData(data));
-  } catch (error) {
-    next(error);
-  }
-});
-
 router.route("/user/add").post(async (req, res, next) => {
   const userId = req.userId; // Passed the userId from the middleware in the request object.
 
@@ -46,6 +36,16 @@ router.route("/user/add").post(async (req, res, next) => {
     if (mostPlayed && recentPlayed)
       return res.json(sendMessage("Added track to user's data"));
     else return res.json(sendMessage("Error occurred. Try again.", false));
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.route("/:id").get(async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const data = await tracksDL.getTrackById(id);
+    return res.json(sendData(data));
   } catch (error) {
     next(error);
   }

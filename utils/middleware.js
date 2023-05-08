@@ -4,11 +4,8 @@ import admin from "../config/firebase-config.js";
 // #FIREBASEAUTH This is the code for authorizing the tokens. In case the user is unauthenticated, the api call will fail and an error can be thrown or a page can be displayed for notifying the unauthorized access.
 class Middleware {
   async decodeToken(req, res, next) {
-    console.log(req.query);
     const authHeader = req.headers.authorization;
-    // console.log(authHeader);
     if (!authHeader) {
-      console.log("No Auth Header");
       return res.json({ message: "Missing Authorization header" });
     }
     const token = req.headers.authorization.split(" ")[1];
