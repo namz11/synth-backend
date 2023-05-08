@@ -6,7 +6,7 @@ class Middleware {
   async decodeToken(req, res, next) {
     const authHeader = req.headers.authorization;
     if (!authHeader) {
-      return res.json({ message: "Missing Authorization header" });
+      return res.status(401).json({ message: "Missing Authorization Header" });
     }
     const token = req.headers.authorization.split(" ")[1];
 
