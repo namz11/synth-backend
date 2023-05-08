@@ -1,11 +1,6 @@
 // #FIREBASEAUTH Need to install firebase-admin from npm
 import admin from "firebase-admin";
 
-// admin.initializeApp({
-//   credential: admin.credential.cert(serviceAccount),
-//   databaseURL: "https://synth-6f232-default-rtdb.firebaseio.com",
-// });
-
 admin.initializeApp({
   credential: admin.credential.cert({
     type: "service_account",
