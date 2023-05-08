@@ -1,10 +1,5 @@
 import axios from "axios";
 
-const spotifyConfig = {
-  clientId: "0203bac9edb949719749a294c22de85c",
-  clientSecret: "1e4bc36cc83e47299003ab39b3f12a29",
-};
-
 // The spotify token was returned from an initial echange of authorization code for access token.
 // The refresh token can be used any number of times to get a new access token.
 // If we want a new refresh token, we need to go through the authorization code flow again, which Dom did manually.
