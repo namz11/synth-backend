@@ -1,3 +1,5 @@
+import { isArray } from "lodash-es";
+
 const alphanumericRegex = /^[0-9a-zA-Z]+$/;
 const alphanumericWithSpaceRegex = /^[0-9a-zA-Z ]+$/;
 const pwdRegex =
@@ -36,6 +38,31 @@ export const helpers = {
 };
 
 export const validations = {
+  checkFireStoreId: (str) => {
+    if (!helpers?.isStringValid(str)) {
+      throw new Error("Invalid id");
+    }
+    if (str && /^[0-9a-zA-Z-]+$/.test(str.trim()) && str.trim().length === 20) {
+      return helpers?.sanitizeString(str);
+    } else {
+      throw new Error("Invalid id");
+    }
+  },
+  checkSpotifyId: (str) => {
+    if (!helpers?.isStringValid(str)) {
+      throw new Error("Invalid id");
+    }
+    if (str && /^[0-9a-zA-Z]+$/.test(str.trim()) && str.trim().length === 22) {
+      return helpers?.sanitizeString(str);
+    } else {
+      throw new Error("Invalid id");
+    }
+  },
+  isValidTracks: (tracks) => {
+    if (isArray(tracks)) {
+      return tracks.some((t) => !helpers?.isStringValid(t?.id)) ? false : true;
+    } else return false;
+  },
   isPasswordValid: (str) => {
     if (str.length < 6) {
       return false;
