@@ -15,6 +15,8 @@ import {
   orderBy,
 } from "firebase/firestore/lite";
 import Playlist from "../models/playlist.model.js";
+import { validations } from "../utils/helpers.js";
+
 const playlistsRef = collection(db, "playlists");
 
 /**
@@ -40,7 +42,10 @@ const getUserPlaylists = async (userId) => {
  */
 const getPlaylistById = async (id) => {
   const playlist = await getDoc(doc(db, "playlists", id));
-  return new Playlist().deserialize(playlist);
+  if (playlist.exists()) {
+    return new Playlist().deserialize(playlist);
+  }
+  throw new Error("Playlist not found");
 };
 
 /**
@@ -90,12 +95,17 @@ const updatePlaylist = async (id, data, userId) => {
 const addTracksToPlaylist = async (id, tracks, userId) => {
   const playlistRef = doc(db, "playlists", id);
   const playlist = await getPlaylistById(id);
+  // TODO validate tracks
   if (playlist.userId === userId) {
-    await updateDoc(playlistRef, {
-      tracks: arrayUnion(...tracks.map((track) => track.id)),
-      updatedAt: serverTimestamp(),
-    });
-    return true;
+    if (validations?.isValidTracks(tracks)) {
+      await updateDoc(playlistRef, {
+        tracks: arrayUnion(...tracks.map((track) => track.id)),
+        updatedAt: serverTimestamp(),
+      });
+      return true;
+    } else {
+      throw new Error("Invalid tracks");
+    }
   } else {
     throw new Error("User does not have permission");
   }

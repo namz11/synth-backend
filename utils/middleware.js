@@ -17,10 +17,10 @@ class Middleware {
         return next();
       }
 
-      return res.json({ message: "Unauthorized" });
+      return res.status(401).json({ message: "Unauthorized" });
     } catch (e) {
       console.log(e);
-      return res.json({ message: "Internal Error" });
+      return res.status(500).json({ message: "Internal Error" });
     }
   }
 }

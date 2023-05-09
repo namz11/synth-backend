@@ -4,6 +4,7 @@ import { usersDL } from "../data/index.js";
 const router = express.Router();
 
 router.route("/").get(async (req, res, next) => {
+  // nobody is using this
   try {
     const data = await usersDL.getUsers();
     return res.json(data);
