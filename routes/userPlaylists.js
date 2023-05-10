@@ -1,6 +1,6 @@
 import express from "express";
 import { userPlaylistsDL } from "../data/index.js";
-import { validations } from "../utils/helpers.js";
+import { validations, helpers } from "../utils/helpers.js";
 import { sendData, sendList, sendMessage } from "../utils/helpers.js";
 
 const router = express.Router();
@@ -19,10 +19,17 @@ router
     }
   })
   .post(async (req, res, next) => {
+    let obj = req.body;
+    try {
+      if (!helpers.isStringValid(obj?.name)) {
+        return next({ status: 400, message: "Playlist name cannot be empty" });
+      }
+    } catch (error) {
+      return next({ status: 400, message: "Playlist name cannot be empty" });
+    }
+
     try {
       const userId = req.userId; // Passed the userId from the middleware in the request object.
-
-      const obj = req.body;
       const data = await userPlaylistsDL.createPlaylist(obj, userId);
       return res.json(sendData(data));
     } catch (error) {
@@ -61,6 +68,15 @@ router
       return next({ status: 400, message: error.message });
     }
 
+    let obj = req.body;
+    try {
+      if (!helpers.isStringValid(obj?.name)) {
+        return next({ status: 400, message: "Playlist name cannot be empty" });
+      }
+    } catch (error) {
+      return next({ status: 400, message: "Playlist name cannot be empty" });
+    }
+
     try {
       await userPlaylistsDL.getPlaylistById(id);
     } catch (error) {
@@ -69,7 +85,6 @@ router
 
     try {
       const userId = req.userId; // Passed the userId from the middleware in the request object.
-      const obj = req.body;
       const data = await userPlaylistsDL.updatePlaylist(id, obj, userId);
       return res.json(sendData(data));
     } catch (error) {
